@@ -2,8 +2,8 @@
 {
     public class Program
     {
-        private static Timer timer;
-        public static async void FromCBRToDb(object o)
+        private static DateTime CurrentDate = DateTime.MinValue;
+        public static async void FromCBRToDb()
         {
             var cbrProvider = new CBRProvider();
             var valCurs = await cbrProvider.GetData();
@@ -12,11 +12,15 @@
         }
         public static void Main()
         {
-            TimerCallback callback = new TimerCallback(FromCBRToDb);
-            timer = new Timer(FromCBRToDb, null, 0, 600000);
+           
             for (; ; )
             {
-                Thread.Sleep(1000);
+                if(CurrentDate.Day != DateTime.Now.Day)
+                {
+                    CurrentDate = DateTime.Now;
+                    FromCBRToDb();
+                }
+                Thread.Sleep(60000);
             }
         }
 
