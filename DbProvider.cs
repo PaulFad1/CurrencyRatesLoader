@@ -1,7 +1,7 @@
 using CurrencyRatesLoader.Data;
 using Microsoft.EntityFrameworkCore;
 
-public class DbProvider
+public class DbProvider // загружает данные из объекта в базу данных
 {
     private AppContext db;
     public DbProvider()

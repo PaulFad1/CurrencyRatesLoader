@@ -2,7 +2,7 @@ using System.Text;
 using System.Xml.Serialization;
 using CurrencyRatesLoader.Data;
 
-public class CBRProvider
+public class CBRProvider // выгружает данные из ЦБ сервиса и десериализирует в объект приложения
 {
     private HttpClient httpClient = new HttpClient() { BaseAddress = new Uri("https://cbr.ru/scripts/") };
     private XmlSerializer serializer;
