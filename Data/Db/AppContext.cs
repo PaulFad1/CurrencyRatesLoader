@@ -1,12 +1,16 @@
 using CurrencyRatesLoader.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 
-    public class AppContext: DbContext
+
+public class AppContext: DbContext
     {
         public DbSet<ValuteDB> Valutes {get;set;}
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=CurrencyRatesDB;Username=postgres;Password=18-12-97"); // укажите свое расположение бд и пароль , вызовите dotnet ef database update
+            var config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").AddEnvironmentVariables().Build();
+            var connectionString = config.GetRequiredSection("ConnectionStrings");
+            optionsBuilder.UseNpgsql(connectionString["DefaultConnection"]);
         }
     }
